@@ -31,19 +31,7 @@ export async function runToolAgent(messages: any) {
         tools: [fetchCatFactTool],
     });
 
-    const response = await agent.invoke({
-        messages: [
-            {
-                role: "system",
-                content: "You are a cat expert.",
-            },
-
-            {
-                role: "user",
-                content: "Tell me a cat fact."
-            },
-        ],
-    });
+    const response = await agent.invoke(messages);
 
     return response.messages[response.messages.length - 1].content;
 }
