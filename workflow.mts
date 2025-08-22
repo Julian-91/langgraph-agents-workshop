@@ -1,4 +1,4 @@
-import { StateGraph } from "@langchain/langgraph";
+import { END, START, StateGraph } from "@langchain/langgraph";
 import { z } from "zod";
 import { runBasicAgent } from "./agents/workflow-agents/basic-agent.mts";
 import { runToolAgent } from "./agents/workflow-agents/tool-agent.mts";
@@ -84,11 +84,6 @@ async function mcpToolAgentNode(state: z.infer<typeof workflowState>) {
 }
 
 const workflow = new StateGraph(workflowState);
-
-workflow.addNode("basicAgent", basicAgentNode);
-workflow.addNode("toolAgent", toolAgentNode);
-workflow.addNode("reasoningAgent", reasoningAgentNode);
-workflow.addNode("mcpToolAgent", mcpToolAgentNode);
 
 // Connect the nodes with edges (.addEdge)
 

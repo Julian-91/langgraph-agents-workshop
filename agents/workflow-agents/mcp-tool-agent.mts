@@ -27,7 +27,7 @@ export async function runMcpToolAgent(messages: any) {
 
     const agent = createReactAgent({
         llm: model,
-        tools: tool,
+        tools: tool
     });
 
     const response = await agent.invoke(messages);
