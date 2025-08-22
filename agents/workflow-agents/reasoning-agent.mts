@@ -14,7 +14,7 @@ const model = new ChatOpenAI({
 export async function runReasoningAgent(messages: any) {
     const agent = createReactAgent({
         llm: model,
-        tools: [],
+        tools: []
     });
 
     const response = await agent.invoke(messages);
