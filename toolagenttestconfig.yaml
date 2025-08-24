@@ -1,0 +1,16 @@
+description: "Testing LangGraph routing agent"
+
+providers:
+  - "exec: npx tsx agents/tool-agent.mts"
+
+prompts:
+  - "{{query}}"
+
+tests:
+  - vars:
+      query: "Tell me a cat fact."
+    options:
+      provider: openai:gpt-4.1
+    assert:
+      - type: llm-rubric
+        value: is a cat fact

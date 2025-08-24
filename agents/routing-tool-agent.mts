@@ -43,6 +43,8 @@ const agent = createReactAgent({
     tools: [getAvailableAgentsTool],
 });
 
+const query = process.argv[2] || "I want to know about bears.";
+
 const response = await agent.invoke({
     messages: [
         {
@@ -52,7 +54,7 @@ const response = await agent.invoke({
 
         {
             role: "user",
-            content: "I want to know about bears."
+            content: query
         },
     ],
 });

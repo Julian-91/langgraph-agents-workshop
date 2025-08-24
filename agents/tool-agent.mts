@@ -30,6 +30,8 @@ const agent = createReactAgent({
     tools: [fetchCatFactTool],
 });
 
+const query = process.argv[2] || "Tell me a cat fact.";
+
 const response = await agent.invoke({
     messages: [
         {
@@ -39,7 +41,7 @@ const response = await agent.invoke({
 
         {
             role: "user",
-            content: "Tell me a cat fact."
+            content: query
         },
     ],
 });

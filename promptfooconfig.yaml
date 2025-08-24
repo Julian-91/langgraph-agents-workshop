@@ -1,0 +1,109 @@
+# promptfoo-config.yaml
+description: "Testing LangGraph routing agent"
+
+# Define your LangGraph agent as a provider
+providers:
+  - "exec: npx tsx agents/routing-tool-agent.mts"
+
+prompts:
+  - "{{query}}"
+
+# Test cases covering different routing scenarios
+tests:
+  # Should route to cat_agent
+  - vars:
+      query: "I want to know about cats"
+    assert:
+      - type: equals
+        value: "cat_agent"
+
+  - vars:
+      query: "Tell me about Persian cats"
+    assert:
+      - type: equals
+        value: "cat_agent"
+
+  - vars:
+      query: "What do cats eat?"
+    assert:
+      - type: equals
+        value: "cat_agent"
+
+  # Should route to dog_agent
+  - vars:
+      query: "I want to know about dogs"
+    assert:
+      - type: equals
+        value: "dog_agent"
+
+  - vars:
+      query: "How to train a puppy?"
+    assert:
+      - type: equals
+        value: "dog_agent"
+
+  - vars:
+      query: "What are the best dog breeds for families?"
+    assert:
+      - type: equals
+        value: "dog_agent"
+
+  # Should route to bird_agent
+  - vars:
+      query: "Tell me about birds"
+    assert:
+      - type: equals
+        value: "bird_agent"
+
+  - vars:
+      query: "How do parrots learn to talk?"
+    assert:
+      - type: equals
+        value: "bird_agent"
+
+  - vars:
+      query: "What do eagles eat?"
+    assert:
+      - type: equals
+        value: "bird_agent"
+
+  # Should return 'none' for unsupported queries
+  - vars:
+      query: "I want to know about bears"
+    assert:
+      - type: equals
+        value: "none"
+
+  - vars:
+      query: "Tell me about fish"
+    assert:
+      - type: equals
+        value: "none"
+
+  - vars:
+      query: "What's the weather like?"
+    assert:
+      - type: equals
+        value: "none"
+
+  - vars:
+      query: "How do I cook pasta?"
+    assert:
+      - type: equals
+        value: "none"
+
+  # Edge cases
+
+  - vars:
+      query: ""
+    assert:
+      - type: contains
+        value: "none"
+
+  - vars:
+      query: "I want to know about dogs and cats"
+    assert:
+      - type: contains
+        value: "dog_agent"
+      - type: contains
+        value: "cat_agent"
