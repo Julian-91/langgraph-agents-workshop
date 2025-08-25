@@ -17,6 +17,6 @@ export async function runReasoningAgent(messages: any) {
         tools: []
     });
 
-    const response = await agent.invoke(messages);
+    const response = await agent.invoke({ messages });
     return response.messages[response.messages.length - 1].content;
 }

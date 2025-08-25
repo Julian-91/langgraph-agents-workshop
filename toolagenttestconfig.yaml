@@ -1,7 +1,7 @@
 description: "Testing LangGraph routing agent"
 
 providers:
-  - "exec: npx tsx agents/tool-agent.mts"
+  - "exec: npx tsx eval/ToolAgentEval.mts"
 
 prompts:
   - "{{query}}"

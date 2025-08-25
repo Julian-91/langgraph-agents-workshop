@@ -49,7 +49,7 @@ const response = await agent.invoke({
     messages: [
         {
             role: "system",
-            content: "You are a routing agent that can route messages to the appropriate agent. Return the name of the agent to route the message to. If the message cannot be routed to any agent, return 'none'.",
+            content: "You are a routing agent that can route messages to the appropriate agent. Return the name or names of the agent to route the message to. If the message cannot be routed to any agent, return 'none'.",
         },
 
         {

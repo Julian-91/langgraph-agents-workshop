@@ -12,7 +12,12 @@ const model = new ChatOpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function runToolAgent(messages: any) {
+const routingToolAgentSchema = z.object({
+    agents: z.array(z.string()).describe("The name or names of the agent to route the message to. If the message cannot be routed to any agent, return 'none'."),
+});
+
+
+export async function runRoutingToolAgent(messages: any) {
     const getAvailableAgentsTool = tool(
         async () => {
             const agents = [
@@ -42,9 +47,10 @@ export async function runToolAgent(messages: any) {
     const agent = createReactAgent({
         llm: model,
         tools: [getAvailableAgentsTool],
+        responseFormat: routingToolAgentSchema,
     });
 
-    const response = await agent.invoke(messages);
+    const response = await agent.invoke({ messages });
 
-    return response.messages[response.messages.length - 1].content;
+    return response.structuredResponse.agents;
 }
