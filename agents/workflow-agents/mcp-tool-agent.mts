@@ -30,7 +30,7 @@ export async function runMcpToolAgent(messages: any) {
         tools: tool
     });
 
-    const response = await agent.invoke(messages);
+    const response = await agent.invoke({ messages });
 
     await client.close();
 

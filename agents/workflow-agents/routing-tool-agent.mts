@@ -6,13 +6,17 @@ import { z } from "zod";
 
 dotenv.config();
 
+const routingToolAgentSchema = z.object({
+    agents: z.array(z.string()),
+});
+
 const model = new ChatOpenAI({
     model: "gpt-5-mini",
     temperature: 1,
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function runToolAgent(messages: any) {
+export async function runRoutingToolAgent(messages: any) {
     const getAvailableAgentsTool = tool(
         async () => {
             const agents = [
@@ -42,9 +46,10 @@ export async function runToolAgent(messages: any) {
     const agent = createReactAgent({
         llm: model,
         tools: [getAvailableAgentsTool],
+        responseFormat: routingToolAgentSchema,
     });
 
-    const response = await agent.invoke(messages);
+    const response = await agent.invoke({ messages });
 
-    return response.messages[response.messages.length - 1].content;
+    return response.structuredResponse;
 }
